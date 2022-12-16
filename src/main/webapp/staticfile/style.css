@@ -1,0 +1,36 @@
+@charset "UTF-8";
+/* Général ------------------------------------------------------------------------------------- */
+body, p, legend, label, input {
+ font: normal 8pt verdana, helvetica, sans-serif;
+}
+
+fieldset {
+ padding: 0 0 5% 5%;
+ border: 1px #0568CD solid;
+ margin: 0% 20% 20% 20%;
+ width:60%;
+}
+legend {
+ font-weight: bold;
+ color: #0568CD;
+}
+/* Forms --------------------------------------------------------------------------------------- */
+form .erreur {
+ color: #900;
+}
+form label {
+ float: left;
+ width: 200px;
+ margin: 3px 0px 0px 0px;
+}
+form input {
+ margin: 3px 3px 0px 0px;
+ border: 1px #999 solid;
+ height:25px;
+}
+form input.sansLabel {
+ margin-left: 200px;
+}
+form .requis {
+ color: #c00;
+}
