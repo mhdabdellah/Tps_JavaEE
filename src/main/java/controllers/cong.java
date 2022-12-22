@@ -1,16 +1,42 @@
 package controllers;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
+
+import models.Person;
 
 public class cong {
 
-	Configuration configuration = new Configuration();
-	configuration.addAnnotatedClass(Employee.class);
-	configuration.addAnnotatedClass(Department.class);
-	configuration.setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/mydatabase");
-	configuration.setProperty("hibernate.connection.username", "user");
-	configuration.setProperty("hibernate.connection.password", "password");
-	configuration.setProperty("hibernate.connection.driver_class", "com.mysql.jdbc.Driver");
-	configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.
-
+	public boolean createPerson(Person person) {
+		try {
+			 Configuration configuration = new Configuration(); 
+		     configuration.configure("hibernate.cfg.xml");
+		     configuration.addAnnotatedClass(models.Person.class);
+	
+		     StandardServiceRegistryBuilder serviceRegistryBuilder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
+	         ServiceRegistry serviceRegistry = serviceRegistryBuilder.build();
+	
+		     SessionFactory sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+		        
+		     // Create a session
+		     Session session = sessionFactory.openSession();
+		        
+		     Transaction transaction = session.beginTransaction();
+		     session.save(person);
+		     transaction.commit();
+	
+		     // Close the session
+		     session.close();
+		     sessionFactory.close();
+		     return true;
+		}catch(Exception e) {
+			System.out.println(e);
+			return false;
+		}
+	}
+	       
 }

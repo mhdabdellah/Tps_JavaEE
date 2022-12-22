@@ -1,17 +1,22 @@
 package models;
 
-//import java.io.Serializable;
+import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 //import javax.persistence.GeneratedValue;
 //import javax.persistence.GenerationType;
 import javax.persistence.Id;
-//import javax.persistence.Table;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-//@Table(name = "person")
-public class Person {
+@Table(name = "person")
+public class Person implements Serializable{
 	
 //    /**
 //	 * 
@@ -70,10 +75,15 @@ public class Person {
 //		return "Person [id=" + id + ", nom=" + nom + ", adress=" + adress + ", password=" + password + "]";
 //	}
 	
+	private static final long serialVersionUID = 8633415090390966715L;
+	
 	@Id
-    int id;
-    public void setId(int c) {id = c;}
-    public int getId() {return id ;}
+//	@GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GenericGenerator(strategy = "auto", name = "id")
+	
+    long id;
+//    public void setId(long c) {id = c;}
+    public long getId() {return id ;}
 
     @Column
     String nom;

@@ -8,8 +8,8 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
 import models.Person;
-
-
+//
+//
 public class Test {
 	 public static void main( String[] args )
 	    {
