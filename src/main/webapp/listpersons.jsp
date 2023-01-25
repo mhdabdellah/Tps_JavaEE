@@ -1,4 +1,7 @@
-
+<%@page  import="models.Person" %>
+<%@page  import="java.util.Iterator" %>
+<%@page  import ="java.util.ArrayList" %>
+<%@page  import ="java.util.List" %>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -27,6 +30,46 @@
 	
 	<br><br>
 	<div class="text-center ">
+	
+	
+		        
+	<br><br>
+	<div class="collapse navbar-collapse text-center" id="navbarSupportedContent">  
+		
+	</div>
+	<br><br>
+	<div class="text-center ">
+	  	<table border="1" class="table">
+			  <thead class="thead-light">
+			    <tr>
+			      <th scope="col">Id</th>
+			      <th scope="col">Nom</th>
+			      <th scope="col">Adress</th>
+			      <th scope="col">Password</th>
+			    </tr>
+			  </thead>
+			  
+			   	<% 
+			   	List<Person> persons = new ArrayList();
+			     persons = (List<Person>) request.getAttribute("personTable");
+			    for (Person p : persons) {
+			  %>
+		        <tbody>
+		            <tr>
+		                <td scope="row"><%= p.getId()%></td>
+		                <td><%= p.getNom() %></td>
+		                <td><%= p.getAdress() %></td>
+		                <td><%= p.getPassword() %></td>
+		                
+		            </tr>
+		            
+		        </tbody>
+		        <%
+		        	}
+		        %>
+		</table>
+	  
+	</div>
 
 	  
 	</div>
