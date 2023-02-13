@@ -27,10 +27,27 @@
 				<h3> Vous pouvez vous insicrir via ce formulaire : </h3>
 				<br/><br/>
 				<div class="text-center">
+				
 					<div>
-						<label align="left">Addresse email : <span class="requis">*</span></label>
+						<label align="left">Nom d'utilisateur : </label>
+						<input align="left" type="text" name="nom" value=""  size="20" maxlength="20"/>
+						<span class="erreur">${erreurs['nom']}</span>
+					</div>
+					<br>
+					<div>
+						<label align="left">Email : <span class="requis">*</span></label>
+						<input align="left" type="text" name="email" value="" size="20" maxlength="60"/>
+						<span class="erreur">${erreurs['email']}</span>
+					</div>
+					<br/>
+					<div>
+						<label align="left"> Telephone : <span class="requis">*</span></label>
+						<input align="left" type="text" name="telephone" value="" size="20" maxlength="60"/>
+					</div>
+					<br/>
+					<div>
+						<label align="left">Addresse : <span class="requis">*</span></label>
 						<input align="left" type="text" name="address" value="" size="20" maxlength="60"/>
-						<span class="erreur">${erreurs['address']}</span>
 					</div>
 					<br/>
 					<div>
@@ -43,12 +60,6 @@
 						<label align="left"> Confirmation du mot de pass : </label>
 						<input align="left" type="text" name="confirm_mot_de_pass" value="" size="20" maxlength="20"/>
 						<span class="erreur">${erreurs['confirm_mot_de_pass']}</span>
-					</div>
-					<br/>
-					<div>
-						<label align="left">Nom d'utilisateur : </label>
-						<input align="left" type="text" name="nom" value=""  size="20" maxlength="20"/>
-						<span class="erreur">${erreurs['nom']}</span>
 					</div>
 					<br/><br/><br/>
 					

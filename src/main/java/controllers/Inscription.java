@@ -21,6 +21,8 @@ import java.util.List;
 import java.util.Map;
 
 import ORM.ORMPerson;
+import ORM.ORMPersonContact;
+import dto.RegisterDto;
 
 //import Dao.DaoPerson;
 
@@ -38,7 +40,7 @@ public class Inscription extends HttpServlet {
 	 public static final String ATT_ERREURS = "erreurs";
 	 public static final String ATT_RESULTAT = "resultat"; 
 	 Map<String, String> listPassword ;
-	 ORMPerson ormPerson;
+	 ORMPersonContact ormPersonContact;
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -49,8 +51,7 @@ public class Inscription extends HttpServlet {
     @Override
     public void init() throws ServletException {
     	
-//    	op = new Operations();
-    	ormPerson = new ORMPerson();
+    	ormPersonContact = new ORMPersonContact();
     	listPassword = new HashMap<String, String>();
     	
     }
@@ -124,7 +125,7 @@ public class Inscription extends HttpServlet {
 //		response.getWriter().append("Served at: ").append(request.getContextPath());
 		String hash = request.getParameter("hash");
 		List<Person> persons = new ArrayList();
-		persons = ormPerson.getAllPersons();
+		persons = ormPersonContact.getAllPersons();
 		System.out.println(persons);
 		String password = listPassword.get(hash);
 		request.setAttribute("personTable" , persons);
@@ -149,13 +150,15 @@ public class Inscription extends HttpServlet {
 		String address = request.getParameter("address");
 		String mot_de_pass = request.getParameter("mot_de_pass");
 		String confirm_mot_de_pass = request.getParameter("confirm_mot_de_pass");
+		String email = request.getParameter("email");
+		String telephone = request.getParameter("telephone");
 		
 		
 		 /* Validation du champ email. */
 		 try {
-			 validationEmail( address );
+			 validationEmail( email );
 		 } catch ( Exception e ) {
-			 erreurs.put( "address", e.getMessage() );
+			 erreurs.put( "email", e.getMessage() );
 		 }
 		 /* Validation des champs mot de passe et confirmation. */
 		 try {
@@ -171,13 +174,14 @@ public class Inscription extends HttpServlet {
 		 }
 		 /* Initialisation du résultat global de la validation. */
 		 if ( erreurs.isEmpty() ) {
-			 Person person = new Person();
-			 person.setNom(nom);
-//			 person.setId(serialVersionUID);
-			 person.setAdress(address);
-			 person.setPassword(getMd5Hash(mot_de_pass));
-			 System.out.println(person);
-			 usersaved = ormPerson.createPerson(person);
+//			 Person person = new Person();
+			 RegisterDto registerDto = new RegisterDto(nom, address, getMd5Hash(mot_de_pass), email, telephone);
+//			 person.setNom(nom);
+////			 person.setId(serialVersionUID);
+//			 person.setAdress(address);
+//			 person.setPassword(getMd5Hash(mot_de_pass));
+			 System.out.println(registerDto);
+			 usersaved = ormPersonContact.create(registerDto);
 			 System.out.println(usersaved);
 //			 Person p = new Person(,nom,address,getMd5Hash(mot_de_pass));
 //			 listPassword.put(getMd5Hash(mot_de_pass), mot_de_pass );

@@ -1,7 +1,10 @@
 package models;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +12,7 @@ import javax.persistence.GenerationType;
 //import javax.persistence.GeneratedValue;
 //import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -23,18 +27,29 @@ public class Person implements Serializable{
 	@Id
 //	@GeneratedValue(strategy= GenerationType.IDENTITY)
     @GenericGenerator(strategy = "auto", name = "id")
-	
     long id;
+	
+	@Column
+    String nom;
+	
+	@Column
+	String adress;
+	
+	@Column
+    String password;
+	
+	@OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<Contact> contacts = new HashSet<>();
+	
+	
 //    public void setId(long c) {id = c;}
     public long getId() {return id ;}
 
-    @Column
-    String nom;
+    
     public void setNom(String n) {nom = n;}
     public String getNom() {return nom;}
 
-    @Column
-    String adress;
+   
 	public String getAdress() {
 		return adress;
 	}
@@ -42,12 +57,26 @@ public class Person implements Serializable{
 		this.adress = adress;
 	}
 	
-	@Column
-    String password;
+	
 	public String getPassword() {
 		return password;
 	}
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+	/**
+	 * @return Set<Contact> return the contacts
+	 */
+	public Set<Contact> getContacts() {
+		return contacts;
+	}
+
+	/**
+	 * @param contacts the contacts to set
+	 */
+	public void setContacts(Set<Contact> contacts) {
+		this.contacts = contacts;
+	}
+
 }
