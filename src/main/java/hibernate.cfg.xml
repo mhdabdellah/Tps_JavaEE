@@ -28,5 +28,6 @@
 
         <!-- Mapping files -->
         <mapping class="models.Person"/>
+        <mapping class="models.Contact"/>
     </session-factory>
 </hibernate-configuration>
