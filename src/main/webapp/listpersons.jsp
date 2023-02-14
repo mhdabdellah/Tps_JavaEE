@@ -1,7 +1,7 @@
 <%@page  import="models.Person" %>
-<%@page  import="objetMetier.Operations" %>
 <%@page  import="java.util.Iterator" %>
 <%@page  import ="java.util.ArrayList" %>
+<%@page  import ="java.util.List" %>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -25,26 +25,17 @@
 		  <p>Vous pouvez voire tous les persons qui sont enregistree dans une liste des persons :</p>
 		</div>
 		
-		<% 
-			
-			ArrayList<Person> persons = new ArrayList<Person>();
-			persons = (ArrayList<Person>) request.getAttribute("personTable");
-		        	
-		        %>
+		        
+	<br><br>
+	
+	<br><br>
+	<div class="text-center ">
+	
+	
 		        
 	<br><br>
 	<div class="collapse navbar-collapse text-center" id="navbarSupportedContent">  
-		        
-		<form class="form-inline my-2 my-lg-0" method="get" action="Inscription">
-			<h3> Vous pouvez obtenir le mot de passe correspondant au hash ici : </h3>
-	      <input class="form-control mr-sm-2" name="hash" type="search" placeholder="siasir hash" aria-label="Search">
-	      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">retrouver le mot de pass</button>
-	      
-	      <div>
-						<p class="succes">${empty password ? password :  "la mot de passe correspondant c'est : ".concat(password)}</p>
-						
-		  </div>
-	    </form>
+		
 	</div>
 	<br><br>
 	<div class="text-center ">
@@ -58,16 +49,14 @@
 			    </tr>
 			  </thead>
 			  
-			   <% 
-		        	Iterator<Person> list = persons.iterator();
-		        	int index = 0;
-		        	while(list.hasNext()){
-		        		Person p = list.next();
-		        	
-		        %>
+			   	<% 
+			   	List<Person> persons = new ArrayList();
+			     persons = (List<Person>) request.getAttribute("personTable");
+			    for (Person p : persons) {
+			  %>
 		        <tbody>
 		            <tr>
-		                <td scope="row"><%= index%></td>
+		                <td scope="row"><%= p.getId()%></td>
 		                <td><%= p.getNom() %></td>
 		                <td><%= p.getAdress() %></td>
 		                <td><%= p.getPassword() %></td>
@@ -76,10 +65,12 @@
 		            
 		        </tbody>
 		        <%
-		         index++;
 		        	}
 		        %>
 		</table>
+	  
+	</div>
+
 	  
 	</div>
 	

@@ -1,0 +1,50 @@
+Voici un exemple de la façon dont Hibernate et Data JPA peuvent être utilisés pour mapper les objets Java aux tables de base de données et exécuter des requêtes SQL :
+
+Hibernate :
+// Création d'une session Hibernate
+Session session = sessionFactory.openSession();
+
+// Début de la transaction
+Transaction transaction = session.beginTransaction();
+
+// Création d'un nouvel objet à enregistrer dans la base de données
+Employee employee = new Employee();
+employee.setFirstName("John");
+employee.setLastName("Doe");
+employee.setEmail("john.doe@example.com");
+
+// Enregistrement de l'objet dans la base de données
+session.save(employee);
+
+// Fin de la transaction
+transaction.commit();
+
+// Fermeture de la session
+session.close();
+
+Data JPA :
+
+// Création d'un EntityManager
+EntityManager entityManager = entityManagerFactory.createEntityManager();
+
+// Début de la transaction
+entityManager.getTransaction().begin();
+
+// Création d'un nouvel objet à enregistrer dans la base de données
+Employee employee = new Employee();
+employee.setFirstName("John");
+employee.setLastName("Doe");
+employee.setEmail("john.doe@example.com");
+
+// Enregistrement de l'objet dans la base de données
+entityManager.persist(employee);
+
+// Fin de la transaction
+entityManager.getTransaction().commit();
+
+// Fermeture de l'EntityManager
+entityManager.close();
+
+Dans cet exemple, on peut voir que Hibernate et Data JPA offrent des approches similaires pour la création et la gestion des sessions et des transactions, mais que Data JPA utilise une interface plus standardisée et simplifiée (EntityManager et EntityTransaction) pour ces tâches.
+
+On peut également remarquer que, dans l'exemple Hibernate, il est nécessaire d'écrire du code SQL explicite pour exécuter des requêtes, tandis que dans l'exemple Data JPA, les requêtes sont exécutées en appelant des méthodes sur l'objet EntityManager, sans avoir à écrire de code SQL. Cela montre comment Data JPA fournit une couche d'abstraction plus élevée et une interface plus standardisée pour les développeurs.

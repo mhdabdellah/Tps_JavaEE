@@ -5,8 +5,9 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import objetMetier.Operations;
+//import objetMetier.Operations;
 import models.Person;
+//import service.PersonService;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -19,7 +20,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import Dao.DaoPerson;
+import ORM.ORMPerson;
+
+//import Dao.DaoPerson;
 
 
 /**
@@ -27,26 +30,27 @@ import Dao.DaoPerson;
  */
 public class Inscription extends HttpServlet {
 	
-	DaoPerson PersonController = new DaoPerson();
+//	DaoPerson PersonController = new DaoPerson();
 	
 	
 	private static final long serialVersionUID = 1L;
-	Operations op;
+//	Operations op;
 	 public static final String ATT_ERREURS = "erreurs";
 	 public static final String ATT_RESULTAT = "resultat"; 
 	 Map<String, String> listPassword ;
+	 ORMPerson ormPerson;
     /**
      * @see HttpServlet#HttpServlet()
      */
     public Inscription() {
         super();
-        // TODO Auto-generated constructor stub
     }
     
     @Override
     public void init() throws ServletException {
     	
-    	op = new Operations();
+//    	op = new Operations();
+    	ormPerson = new ORMPerson();
     	listPassword = new HashMap<String, String>();
     	
     }
@@ -119,13 +123,10 @@ public class Inscription extends HttpServlet {
 		// TODO Auto-generated method stub
 //		response.getWriter().append("Served at: ").append(request.getContextPath());
 		String hash = request.getParameter("hash");
-		
-//		PersonBeans pb = new PersonBeans();
-//		pb.setListe(op.gettAll());
 		List<Person> persons = new ArrayList();
-		persons = PersonController.getall();
+		persons = ormPerson.getAllPersons();
+		System.out.println(persons);
 		String password = listPassword.get(hash);
-//		request.setAttribute("personTable" , op);
 		request.setAttribute("personTable" , persons);
 		request.setAttribute("listOfPassword", listPassword);
 		request.setAttribute("password", password);
@@ -170,16 +171,23 @@ public class Inscription extends HttpServlet {
 		 }
 		 /* Initialisation du résultat global de la validation. */
 		 if ( erreurs.isEmpty() ) {
-			 
-			 Person p = new Person(1,nom,address,getMd5Hash(mot_de_pass));
-			 listPassword.put(getMd5Hash(mot_de_pass), mot_de_pass );
-			 op.add(p);
-			 try {
-				usersaved = PersonController.save(p);
-			 } catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			 }
+			 Person person = new Person();
+			 person.setNom(nom);
+//			 person.setId(serialVersionUID);
+			 person.setAdress(address);
+			 person.setPassword(getMd5Hash(mot_de_pass));
+			 System.out.println(person);
+			 usersaved = ormPerson.createPerson(person);
+			 System.out.println(usersaved);
+//			 Person p = new Person(,nom,address,getMd5Hash(mot_de_pass));
+//			 listPassword.put(getMd5Hash(mot_de_pass), mot_de_pass );
+//			 op.add(p);
+//			 try {
+////				usersaved = PersonController.save(p);
+//			 } catch (SQLException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			 }
 			 if(usersaved) {
 				 resultat = "Succès de l'inscription.";
 			 }else {
