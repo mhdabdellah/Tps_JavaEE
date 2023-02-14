@@ -2,6 +2,7 @@ package ORM;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Properties;
 import java.util.Set;
 
 import javax.persistence.TypedQuery;
@@ -11,6 +12,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.cfg.Environment;
 import org.hibernate.service.ServiceRegistry;
 
 import dto.RegisterDto;
@@ -36,11 +38,31 @@ public class ORMPersonContact {
     public ORMPersonContact() {
         super();
         configuration = new Configuration();
-        configuration.configure("hibernate.cfg.xml");
-        configuration.addAnnotatedClass(models.Person.class);
+        
+        Properties settings = new Properties();
+		settings.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
+		settings.put(Environment.URL, "jdbc:mysql://localhost:3306/tp9db");
+		settings.put(Environment.USER, "root");
+		settings.put(Environment.PASS, "sidi1212");
+		
+//		settings.put(Environment.DIALECT, "org.hibernate.dialect.MySQL8Dialect");
+		settings.put(Environment.DIALECT, "org.hibernate.dialect.MySQLDialect");
+
+		settings.put(Environment.SHOW_SQL, "true");
+		settings.put(Environment.HBM2DDL_AUTO, "update");
+		
+		configuration.setProperties(settings);
+		configuration.addAnnotatedClass(models.Person.class);
+	    configuration.addAnnotatedClass(models.Contact.class);
         serviceRegistryBuilder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
         serviceRegistry = serviceRegistryBuilder.build();
         sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+//        configuration.configure("hibernate.cfg.xml");
+//        configuration.addAnnotatedClass(models.Person.class);
+//        configuration.addAnnotatedClass(models.Contact.class);
+//        serviceRegistryBuilder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
+//        serviceRegistry = serviceRegistryBuilder.build();
+//        sessionFactory = configuration.buildSessionFactory(serviceRegistry);
 
     }
 
@@ -51,19 +73,22 @@ public class ORMPersonContact {
             // Create a session
             Session session = sessionFactory.openSession();
             Transaction transaction = session.beginTransaction();
-            Contact contact = new Contact();
-            contact.setEmail(registerDto.getEmail());
-            contact.setTelephone(registerDto.getTelephone());
+            
             Person person = new Person();
             person.setNom(registerDto.getNom());
             person.setAdress(registerDto.getAdress());
             person.setPassword(registerDto.getPassword());
             Set<Contact> contacts = new HashSet<>();
+            Contact contact = new Contact();
+            contact.setEmail(registerDto.getEmail());
+            contact.setTelephone(registerDto.getTelephone());
             contacts.add(contact);
             person.setContacts(contacts);
             contact.setPerson(person);
             session.save(person);
-            session.save(contact);
+//            session.save(contact);
+            
+            session.flush();
             transaction.commit();
 
             // Close the session

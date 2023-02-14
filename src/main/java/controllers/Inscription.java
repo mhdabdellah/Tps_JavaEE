@@ -176,22 +176,9 @@ public class Inscription extends HttpServlet {
 		 if ( erreurs.isEmpty() ) {
 //			 Person person = new Person();
 			 RegisterDto registerDto = new RegisterDto(nom, address, getMd5Hash(mot_de_pass), email, telephone);
-//			 person.setNom(nom);
-////			 person.setId(serialVersionUID);
-//			 person.setAdress(address);
-//			 person.setPassword(getMd5Hash(mot_de_pass));
 			 System.out.println(registerDto);
 			 usersaved = ormPersonContact.create(registerDto);
 			 System.out.println(usersaved);
-//			 Person p = new Person(,nom,address,getMd5Hash(mot_de_pass));
-//			 listPassword.put(getMd5Hash(mot_de_pass), mot_de_pass );
-//			 op.add(p);
-//			 try {
-////				usersaved = PersonController.save(p);
-//			 } catch (SQLException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			 }
 			 if(usersaved) {
 				 resultat = "Succès de l'inscription.";
 			 }else {
